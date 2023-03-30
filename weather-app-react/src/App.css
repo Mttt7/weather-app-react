@@ -17,8 +17,8 @@
 .add-weather-card{
   margin: 10px;
   border: solid 1px red;
-  width: 500px;
-  height: 250px;
+  width: 450px;
+  height: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,6 +35,77 @@
 }
 
 .weather-card{
-  width: 500px;
-  height: 250px;
+  overflow: hidden;
+  border: solid 1px red;
+  width: 450px;
+  height: 220px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 3fr 1fr 1fr;
+}
+
+.weather-card > .city-name{
+grid-row: 1/1;
+font-size: 3.2rem;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 10;
+color: white;
+}
+.weather-card > .min-temp{
+  color: rgb(134, 215, 242);
+  font-weight: 600;
+  font-size: 1.4rem;
+  grid-row: 2/3;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+ }
+.weather-card > .max-temp{
+  color: rgb(238, 165, 113);
+  font-weight: 600;
+  font-size: 1.4rem;
+  grid-row: 3/4;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.weather-card > .current-temp{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 3.1rem;
+  z-index: 10;
+  color: white;
+}
+
+.weather-card > .wind-speed{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: 500;
+  font-size: 2rem;
+  z-index: 10;
+  color: white;
+}
+.weather-card{
+  background-size: cover;
+  background-position: center;
+
+}
+.weather-card::before {
+  content: '';
+  position: absolute;
+  
+  height: 220px;
+  width: 450px;
+  background-color: black;
+  opacity: .65;
+  z-index: 1;
 }

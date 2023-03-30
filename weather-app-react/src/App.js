@@ -5,13 +5,40 @@ import React from 'react';
 
 
 function WeatherCard({city}){
-    const [weather, setWeather] = useState({
-      city:'',
-      temp:'',
-      tempMax:'',
-      tempMin:'',
-      windSpeed:''
+
+  const [weather, setWeather] = useState({
+    city:'',
+    temp:'',
+    tempMax:'',
+    tempMin:'',
+    windSpeed:''
+  })
+
+  const [weatherImg, setWeatherImg] = useState('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+
+  function convertToCelsius(temp){
+      return Math.floor((temp-273.15)*10)/10
+  }
+
+
+
+  async function fetchImage(city){
+    return await fetch(`https://api.pexels.com/v1/search?query=${city}&page=${1}`, 
+    {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            Authorization: 'v6wCb15yxRzUiBUEqNZmUSrMNUVk9rF5lcp3i1nRgw5sAPS1FAOh4NcU',
+        },
     })
+    .then(response=>{
+        return response.json()
+    })
+    .then(data=>{
+      setWeatherImg(data.photos[0].src.original)
+    })
+
+  }
 
   async function fetchWeather(city){
     return await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=27e1317dd7a01c91b570e159116336c3`)
@@ -19,18 +46,29 @@ function WeatherCard({city}){
       return response.json()
     })
     .then((data)=>{
-      console.log(data)
+      
       const weather = {city:data.name, temp:data.main.temp, tempMax:data.main.temp_max, tempMin: data.main.temp_min, windSpeed:data.wind.speed}
       setWeather(weather)
     })
+    
+      
+    
   }
   React.useEffect(()=>{
     setWeather(fetchWeather(city))
+    fetchImage(city)
   },[])
 
 
   return(
-    <div className='weather-card'>{weather.city} {weather.temp} {weather.tempMax} {weather.tempMin} {weather.windSpeed}</div>
+    <div className='weather-card' style={{backgroundImage: `url("${weatherImg}")`}}>
+        <div className='city-name'>{weather.city}</div>
+        <div className='current-temp'>{convertToCelsius(weather.temp)}℃</div>
+        <div className='min-temp'>min: {convertToCelsius(weather.tempMin)}℃</div>
+        <div className='max-temp'>max: {convertToCelsius(weather.tempMax)}℃</div>
+        <div className='wind-speed'>💨: {weather.windSpeed}</div>
+        
+    </div>
   )
 }
 
@@ -89,6 +127,7 @@ export default function App() {
 
   return (
    <div className='container'>
+    <div>CELSIUS / FAHRENEIT</div>
     <AddWeatherCard addCity={handleCityAdded} cityExists={handleDuplicate} cities={cities}/>
     {cities.map(c=>{
       return(<WeatherCard key={c} city={c}/>)
