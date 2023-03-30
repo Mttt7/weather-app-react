@@ -1,0 +1,40 @@
+#root{
+  height: 100vh;
+  width: 100vw;
+}
+.container{
+  width: 100%;
+  height: 100%;
+  background: rgb(53,50,182);
+  background: linear-gradient(27deg, rgba(53,50,182,1) 7%, rgba(33,185,255,1) 87%);
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+}
+
+.add-weather-card{
+  margin: 10px;
+  border: solid 1px red;
+  width: 500px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-weather-card > input{
+  width: 50%;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: .4rem;
+  font-size: 2rem;
+}
+
+.weather-card{
+  width: 500px;
+  height: 250px;
+}
