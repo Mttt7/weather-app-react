@@ -118,7 +118,7 @@ export default function App() {
 
   function handleCityAdded(city){
     setCities(()=>{
-      return [...cities, city]
+      return [ city, ...cities]
     })
   }
   function handleDuplicate(city){

@@ -1,24 +1,27 @@
 #root{
   height: 100vh;
   width: 100vw;
+  overflow: auto;
 }
 .container{
   width: 100%;
-  height: 100%;
+  
   background: rgb(53,50,182);
   background: linear-gradient(27deg, rgba(53,50,182,1) 7%, rgba(33,185,255,1) 87%);
   display:flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: 10px;
+  overflow: auto;
   
 }
 
 .add-weather-card{
-  margin: 10px;
-  border: solid 1px red;
-  width: 450px;
-  height: 220px;
+  
+  
+  width: 420px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,6 +29,7 @@
 }
 
 .add-weather-card > input{
+  
   width: 50%;
   border: none;
   outline: none;
@@ -36,7 +40,7 @@
 
 .weather-card{
   overflow: hidden;
-  border: solid 1px red;
+  border-radius: 10px;
   width: 450px;
   height: 220px;
   display: grid;
@@ -46,12 +50,14 @@
 
 .weather-card > .city-name{
 grid-row: 1/1;
-font-size: 3.2rem;
+font-size: 3rem;
+padding: 10px;
 display: flex;
 align-items: center;
 justify-content: center;
 z-index: 10;
 color: white;
+background-color: rgba(0, 0, 0, 0.65);
 }
 .weather-card > .min-temp{
   color: rgb(134, 215, 242);
@@ -62,6 +68,8 @@ color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.65);
+
   
  }
 .weather-card > .max-temp{
@@ -73,6 +81,8 @@ color: white;
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.65);
+
 }
 
 .weather-card > .current-temp{
@@ -83,9 +93,12 @@ color: white;
   font-size: 3.1rem;
   z-index: 10;
   color: white;
+  background-color: rgba(0, 0, 0, 0.65);
+
 }
 
 .weather-card > .wind-speed{
+  grid-row: 2/4;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -93,19 +106,23 @@ color: white;
   font-size: 2rem;
   z-index: 10;
   color: white;
+  background-color: rgba(0, 0, 0, 0.65);
+
 }
 .weather-card{
   background-size: cover;
   background-position: center;
-
+  
 }
-.weather-card::before {
+
+
+/* .weather-card::before {
   content: '';
   position: absolute;
-  
+
   height: 220px;
   width: 450px;
   background-color: black;
   opacity: .65;
   z-index: 1;
-}
+} */
