@@ -2,26 +2,31 @@
   height: 100vh;
   width: 100vw;
   overflow: auto;
+  background: rgb(53,50,182);
+  background: linear-gradient(27deg, rgba(53,50,182,1) 7%, rgba(33,185,255,1) 87%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 .container{
   width: 100%;
-  
-  background: rgb(53,50,182);
-  background: linear-gradient(27deg, rgba(53,50,182,1) 7%, rgba(33,185,255,1) 87%);
-  display:flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 10px;
-  overflow: auto;
+ 
+  display: grid;
+  grid-template-columns:repeat(auto-fit, minmax(490px,1fr)) ;
+  justify-content: center;
+
+    
   
 }
 
 .add-weather-card{
-  
+  grid-column: 1/-1;
+  justify-self: center;
   
   width: 420px;
-  height: 200px;
+  height: 100px;
+  margin-top: 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,8 +42,21 @@
   padding: .4rem;
   font-size: 2rem;
 }
+.add-weather-card > input::placeholder {
+  transition: ease-in;
+  opacity: 0.25;
+}
+
+
+
+
 
 .weather-card{
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  justify-self: center;
+  margin:2rem;
   overflow: hidden;
   border-radius: 10px;
   width: 450px;
@@ -115,14 +133,27 @@ background-color: rgba(0, 0, 0, 0.65);
   
 }
 
+.change-units{
+  color:rgb(251, 224, 224);
+  cursor: pointer;
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  justify-self: center;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.change-units:hover{
+  
+}
+.change-units > *{
+  font-family: 'Delicious Handrawn', cursive;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  font-size: 4rem;
 
-/* .weather-card::before {
-  content: '';
-  position: absolute;
-
-  height: 220px;
-  width: 450px;
-  background-color: black;
-  opacity: .65;
-  z-index: 1;
-} */
+}

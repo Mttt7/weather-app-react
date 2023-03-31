@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import React from 'react';
 
 
-function WeatherCard({city}){
+function WeatherCard({city, unit}){
 
+  
   const [weather, setWeather] = useState({
     city:'',
     temp:'',
@@ -17,7 +18,11 @@ function WeatherCard({city}){
   const [weatherImg, setWeatherImg] = useState('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
 
   function convertToCelsius(temp){
-      return Math.floor((temp-273.15)*10)/10
+      return Math.floor((temp-273.15)*10)/10 + '°C'
+  }
+
+  function convertToFahrenheit(temp){
+    return Math.floor(((temp - 273.15) * 9/5 + 32) * 10) / 10 + '°F';
   }
 
 
@@ -63,10 +68,10 @@ function WeatherCard({city}){
   return(
     <div className='weather-card' style={{backgroundImage: `url("${weatherImg}")`}}>
         <div className='city-name'>{weather.city}</div>
-        <div className='current-temp'>{convertToCelsius(weather.temp)}℃</div>
-        <div className='min-temp'>min: {convertToCelsius(weather.tempMin)}℃</div>
-        <div className='max-temp'>max: {convertToCelsius(weather.tempMax)}℃</div>
-        <div className='wind-speed'>💨: {weather.windSpeed}</div>
+        <div className='current-temp'>{unit==='c' ? convertToFahrenheit(weather.temp): convertToCelsius(weather.temp)}</div>
+        <div className='min-temp'>min: {unit==='c' ? convertToFahrenheit(weather.tempMin): convertToCelsius(weather.tempMin)}</div>
+        <div className='max-temp'>max: {unit==='c' ? convertToFahrenheit(weather.tempMax): convertToCelsius(weather.tempMax)}</div>
+        <div className='wind-speed'>💨: {weather.windSpeed} m/s</div>
         
     </div>
   )
@@ -102,19 +107,73 @@ function AddWeatherCard({addCity,cities, cityExists}){
     }
   }
 
+  const inputRef = useRef(null)
+
+  React.useEffect(()=>{
+
+    setInterval(changePlaceholder,3500)
+
+  },[])
+  let cityIterator = 0
+
+
+  function changePlaceholder(){
+    const cities = [
+      'Madrit',
+      'Barcelona',
+      'Sydney',
+      'Oslo',
+      'Toronto',
+      'Berlin',
+      'Warsaw',
+      'Porto Rico',
+      'New Delhi'
+    ]
+    console.log(cities[cityIterator])
+    if(cityIterator===cities.length-1) cityIterator=0
+    inputRef.current.placeholder = cities[cityIterator]
+    cityIterator++
+     
+  }
+
   return(
     <div className='add-weather-card'>
-      <input type='text' placeholder="" value={city} onChange={handleChange} onKeyPress={handleKeyPress}/>
+      <input type='text'  ref={(element)=>{inputRef.current = element}} placeholder="" value={city} onChange={handleChange} onKeyPress={handleKeyPress}/>
     </div>
   )
 }
 
 
+function CurrentUnit({changeUnit}){
+  const [currentUnit, setCurrentUnit] = useState('c')
 
+  function handleClick(){
+    if(currentUnit==='c'){
+      setCurrentUnit('f')
+      changeUnit('f')
+    }else if(currentUnit==='f'){
+      setCurrentUnit('c')
+      changeUnit('c')
+    }
+  }
+ 
+
+  return(
+  <div onClick={handleClick} className='change-units'>
+      <div  className='current-unit'> °{currentUnit.toUpperCase()}</div>
+  </div>
+  )
+}
 
 
 export default function App() {
   const [cities, setCities] = useState([])
+  const [unit, setUnit] = useState('c')
+
+  function changeUnit(u){
+    if(u==='c') setUnit('f')
+    else if(u==='f') setUnit('c')
+  }
 
   function handleCityAdded(city){
     setCities(()=>{
@@ -127,10 +186,12 @@ export default function App() {
 
   return (
    <div className='container'>
-    <div>CELSIUS / FAHRENEIT</div>
-    <AddWeatherCard addCity={handleCityAdded} cityExists={handleDuplicate} cities={cities}/>
+    <AddWeatherCard  addCity={handleCityAdded} cityExists={handleDuplicate} cities={cities}/>
+    <CurrentUnit changeUnit={changeUnit}/>
+
+    
     {cities.map(c=>{
-      return(<WeatherCard key={c} city={c}/>)
+      return(<WeatherCard key={c} unit={unit} city={c}/>)
     })}
 
    </div>
