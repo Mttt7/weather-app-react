@@ -134,6 +134,7 @@ background-color: rgba(0, 0, 0, 0.65);
 }
 
 .change-units{
+  transition: 1s;
   color:rgb(251, 224, 224);
   cursor: pointer;
   grid-column: 1/-1;
@@ -148,6 +149,9 @@ background-color: rgba(0, 0, 0, 0.65);
 }
 .change-units:hover{
   
+  color:rgb(255, 255, 255);
+  transform: scale(1.04);
+  transition: 1s;
 }
 .change-units > *{
   font-family: 'Delicious Handrawn', cursive;

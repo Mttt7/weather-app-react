@@ -40,8 +40,13 @@ function WeatherCard({city, unit}){
         return response.json()
     })
     .then(data=>{
-      setWeatherImg(data.photos[0].src.original)
+      if(data.photos.length!==0){
+        setWeatherImg(data.photos[0].src.original)
+      }
+    }).catch((error)=>{
+      console.log(error)
     })
+    
 
   }
 
@@ -51,9 +56,15 @@ function WeatherCard({city, unit}){
       return response.json()
     })
     .then((data)=>{
-      
-      const weather = {city:data.name, temp:data.main.temp, tempMax:data.main.temp_max, tempMin: data.main.temp_min, windSpeed:data.wind.speed}
-      setWeather(weather)
+      if(data.cod!=='404'){
+        const weather = {city:data.name, temp:data.main.temp, tempMax:data.main.temp_max, tempMin: data.main.temp_min, windSpeed:data.wind.speed}
+        setWeather(weather)
+      }else{
+        setWeather(null)
+      }
+    })
+    .catch((error)=>{
+      console.log(error)
     })
     
       
@@ -64,17 +75,19 @@ function WeatherCard({city, unit}){
     fetchImage(city)
   },[])
 
-
-  return(
-    <div className='weather-card' style={{backgroundImage: `url("${weatherImg}")`}}>
-        <div className='city-name'>{weather.city}</div>
-        <div className='current-temp'>{unit==='c' ? convertToFahrenheit(weather.temp): convertToCelsius(weather.temp)}</div>
-        <div className='min-temp'>min: {unit==='c' ? convertToFahrenheit(weather.tempMin): convertToCelsius(weather.tempMin)}</div>
-        <div className='max-temp'>max: {unit==='c' ? convertToFahrenheit(weather.tempMax): convertToCelsius(weather.tempMax)}</div>
-        <div className='wind-speed'>💨: {weather.windSpeed} m/s</div>
-        
-    </div>
-  )
+  if(weather!==null){
+    return(
+      <div className='weather-card' style={{backgroundImage: `url("${weatherImg}")`}}>
+          <div className='city-name'>{weather.city}</div>
+          <div className='current-temp'>{unit==='f' ? convertToFahrenheit(weather.temp): convertToCelsius(weather.temp)}</div>
+          <div className='min-temp'>min: {unit==='f' ? convertToFahrenheit(weather.tempMin): convertToCelsius(weather.tempMin)}</div>
+          <div className='max-temp'>max: {unit==='f' ? convertToFahrenheit(weather.tempMax): convertToCelsius(weather.tempMax)}</div>
+          <div className='wind-speed'>💨: {weather.windSpeed} m/s</div>
+          
+      </div>
+    )
+  }
+  
 }
 
 function AddWeatherCard({addCity,cities, cityExists}){
@@ -89,7 +102,7 @@ function AddWeatherCard({addCity,cities, cityExists}){
 
   function handleKeyPress(e){
     if(e.key==='Enter'){
-      console.log(cities.length)
+      
       if(cities.length>0){
         let unique = true
         cities.forEach(c => {
@@ -129,7 +142,7 @@ function AddWeatherCard({addCity,cities, cityExists}){
       'Porto Rico',
       'New Delhi'
     ]
-    console.log(cities[cityIterator])
+    
     if(cityIterator===cities.length-1) cityIterator=0
     inputRef.current.placeholder = cities[cityIterator]
     cityIterator++
