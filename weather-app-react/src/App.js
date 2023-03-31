@@ -4,7 +4,7 @@ import {useState, useEffect, useRef} from 'react'
 import React from 'react';
 
 
-function WeatherCard({city, unit}){
+function WeatherCard({city, unit, cities,setCities}){
 
   
   const [weather, setWeather] = useState({
@@ -75,9 +75,11 @@ function WeatherCard({city, unit}){
     fetchImage(city)
   },[])
 
+
+
   if(weather!==null){
     return(
-      <div className='weather-card' style={{backgroundImage: `url("${weatherImg}")`}}>
+      <div className='weather-card'  style={{backgroundImage: `url("${weatherImg}")`}}>
           <div className='city-name'>{weather.city}</div>
           <div className='current-temp'>{unit==='f' ? convertToFahrenheit(weather.temp): convertToCelsius(weather.temp)}</div>
           <div className='min-temp'>min: {unit==='f' ? convertToFahrenheit(weather.tempMin): convertToCelsius(weather.tempMin)}</div>
@@ -173,7 +175,7 @@ function CurrentUnit({changeUnit}){
 
   return(
   <div onClick={handleClick} className='change-units'>
-      <div  className='current-unit'> °{currentUnit.toUpperCase()}</div>
+      <div className='current-unit'> °{currentUnit.toUpperCase()}</div>
   </div>
   )
 }
@@ -184,8 +186,8 @@ export default function App() {
   const [unit, setUnit] = useState('c')
 
   function changeUnit(u){
-    if(u==='c') setUnit('f')
-    else if(u==='f') setUnit('c')
+    if(u==='c') setUnit('c')
+    else if(u==='f') setUnit('f')
   }
 
   function handleCityAdded(city){
@@ -204,7 +206,7 @@ export default function App() {
 
     
     {cities.map(c=>{
-      return(<WeatherCard key={c} unit={unit} city={c}/>)
+      return(<WeatherCard cities={cities} setCities={setCities} key={c} unit={unit} city={c}/>)
     })}
 
    </div>
