@@ -67,8 +67,6 @@ function WeatherCard({city, unit, cities,setCities}){
       console.log(error)
     })
     
-      
-    
   }
   React.useEffect(()=>{
     setWeather(fetchWeather(city))
@@ -76,10 +74,16 @@ function WeatherCard({city, unit, cities,setCities}){
   },[])
 
 
+  function handleDoubleClick(e){
+    const keyToDel=e.target.parentNode.dataset.key
+    setCities( cities.filter(c=>{return c!==keyToDel}))
+  }
+
+
 
   if(weather!==null){
     return(
-      <div className='weather-card'  style={{backgroundImage: `url("${weatherImg}")`}}>
+      <div className='weather-card'  data-key={city} onDoubleClick={handleDoubleClick} style={{backgroundImage: `url("${weatherImg}")`}}>
           <div className='city-name'>{weather.city}</div>
           <div className='current-temp'>{unit==='f' ? convertToFahrenheit(weather.temp): convertToCelsius(weather.temp)}</div>
           <div className='min-temp'>min: {unit==='f' ? convertToFahrenheit(weather.tempMin): convertToCelsius(weather.tempMin)}</div>
@@ -134,14 +138,16 @@ function AddWeatherCard({addCity,cities, cityExists}){
 
   function changePlaceholder(){
     const cities = [
-      'Madrit',
+      'Texas',
+      'Oklahoma',
+      'Madrid',
       'Barcelona',
       'Sydney',
       'Oslo',
       'Toronto',
       'Berlin',
       'Warsaw',
-      'Porto Rico',
+      'Puerto Rico',
       'New Delhi'
     ]
     
