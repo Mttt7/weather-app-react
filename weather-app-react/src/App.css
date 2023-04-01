@@ -12,12 +12,18 @@
 .container{
   width: 100%;
  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    
+  
+}
+.cities-container{
+  width: 100%;
+ 
   display: grid;
   grid-template-columns:repeat(auto-fit, minmax(490px,1fr)) ;
   justify-content: center;
-
-    
-  
 }
 
 .add-weather-card{
@@ -64,6 +70,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 3fr 1fr 1fr;
+  
 }
 
 .weather-card > .city-name{
