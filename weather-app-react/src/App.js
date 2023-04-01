@@ -46,7 +46,7 @@ function WeatherCard({city, unit, cities,setCities,index, indexes,setIndexes}){
         setWeatherImg(data.photos[0].src.original)
       }
     }).catch((error)=>{
-      console.log(error)
+      console.log('No such image')
     })
     
 
@@ -66,7 +66,7 @@ function WeatherCard({city, unit, cities,setCities,index, indexes,setIndexes}){
       }
     })
     .catch((error)=>{
-      console.log(error)
+      console.log('No such city')
     })
     
   }
@@ -89,7 +89,6 @@ function WeatherCard({city, unit, cities,setCities,index, indexes,setIndexes}){
       }
     }
     catch(e){
-      console.log(e)
     }
     return str
   }
@@ -117,14 +116,13 @@ function AddWeatherCard({addCity, cities, cityExists}){
 
   function handleChange(e){
     const newName = e.target.value
-    console.log(name)
+    
     setName(()=>{
       return newName
     })
   }
 
   function handleKeyPress(e){
-    console.log(name)
     if(e.key==='Enter'){
       setName('')
       if(cities.length>0){
@@ -144,13 +142,16 @@ function AddWeatherCard({addCity, cities, cityExists}){
 
   const inputRef = useRef(null)
 
-  // React.useEffect(()=>{
+  React.useEffect(()=>{
 
-  //   setInterval(changePlaceholder,3500)
+    setInterval(changePlaceholder,3500)
 
-  // },[])
+  },[])
 
-  let cityIterator = 0
+  
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
   function changePlaceholder(){
     const cities = [
       'Texas',
@@ -158,17 +159,19 @@ function AddWeatherCard({addCity, cities, cityExists}){
       'Madrid',
       'Barcelona',
       'Sydney',
+      'Pretoria',
       'Oslo',
       'Toronto',
       'Berlin',
       'Warsaw',
       'Puerto Rico',
-      'New Delhi'
+      'New Delhi',
+      'Abu Zabi'
     ]
+    try{
+      inputRef.current.placeholder = cities[getRandomInt(13)]
+    }catch(e){}
     
-    if(cityIterator===cities.length-2) cityIterator=0
-    inputRef.current.placeholder = cities[cityIterator]
-    cityIterator++
   }
 
   return(
@@ -202,6 +205,14 @@ function CurrentUnit({changeUnit}){
 }
 
 
+function Footer(){
+
+
+  return(
+    <div> footeasar</div>
+  )
+}
+
 export default function App() {
   const [cities, setCities] = useState([{index:0, cityName:'Lublin'}])
   const [unit, setUnit] = useState('c')
@@ -220,7 +231,7 @@ export default function App() {
   }
 
   function changeUnit(u){
-    console.log(cities)
+    
     if(u==='c') setUnit('c')
     else if(u==='f') setUnit('f')
   }
@@ -236,6 +247,7 @@ export default function App() {
 
   return (
     <div className='container'>
+      <Footer />
       <AddWeatherCard  addCity={handleCityAdded} cityExists={handleDuplicate} cities={cities}/>
       <CurrentUnit changeUnit={changeUnit}/>       
       <div className='cities-container' >

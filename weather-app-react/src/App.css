@@ -10,19 +10,16 @@
   justify-content: flex-start;
 }
 .container{
-  width: 100%;
- 
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
-    
   
 }
 .cities-container{
   width: 100%;
- 
   display: grid;
-  grid-template-columns:repeat(auto-fit, minmax(490px,1fr)) ;
+  grid-template-columns:repeat(auto-fit, minmax(480px,1fr)) ;
   justify-content: center;
 }
 
