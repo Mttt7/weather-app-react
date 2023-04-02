@@ -1,8 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect, useRef} from 'react'
-
-
+import githubLogo from './gitlogo.png'
+import yourweatherImage from './yourweather.gif'
+import sadCloud from './sadcloud.gif'
+import sun from './sun.gif'
 import React from 'react';
 
 
@@ -166,10 +168,12 @@ function AddWeatherCard({addCity, cities, cityExists}){
       'Warsaw',
       'Puerto Rico',
       'New Delhi',
-      'Abu Zabi'
+      'Abu Zabi',
+      'Reykjavík',
+      'Antalya'
     ]
     try{
-      inputRef.current.placeholder = cities[getRandomInt(13)]
+      inputRef.current.placeholder = cities[getRandomInt(15)]
     }catch(e){}
     
   }
@@ -205,11 +209,45 @@ function CurrentUnit({changeUnit}){
 }
 
 
+
+function Header(){
+  function handleLogoClick(e){
+    if(e.target.dataset.logo==='normal'){
+      e.target.dataset.logo='sad'
+      e.target.src=sadCloud
+    }else if(e.target.dataset.logo==='sad'){
+      e.target.dataset.logo='sun'
+      e.target.src=sun
+    }else if(e.target.dataset.logo==='sun'){
+      e.target.dataset.logo='normal'
+      e.target.src=yourweatherImage
+    }
+    
+  }
+    
+  return(
+    <div className='header'> 
+      
+      <div className='logo'> 
+        <img onClick={handleLogoClick} data-logo="normal" src={yourweatherImage}/> 
+        <div className='text'> Weather-app</div>
+        <img onClick={handleLogoClick}  data-logo="normal"src={yourweatherImage}/> 
+      </div>
+
+    </div>
+  )
+
+}
 function Footer(){
 
 
   return(
-    <div> footeasar</div>
+    <div className='footer'>
+       <div className='cred'>
+        by mt, using <a href="https://openweathermap.org/">openWeather</a> and <a href="https://www.pexels.com/">Pexels</a> API
+      </div>
+      <div className='github-link'><a href="https://github.com/Mttt7/weather-app-react"><img src={githubLogo}/></a></div>
+    </div>
   )
 }
 
@@ -247,7 +285,7 @@ export default function App() {
 
   return (
     <div className='container'>
-      <Footer />
+      <Header />
       <AddWeatherCard  addCity={handleCityAdded} cityExists={handleDuplicate} cities={cities}/>
       <CurrentUnit changeUnit={changeUnit}/>       
       <div className='cities-container' >
@@ -256,7 +294,8 @@ export default function App() {
             <WeatherCard indexes={indexes} setIndexes={setIndexes} index={index} cities={cities} setCities={setCities} key={c.cityName} unit={unit} city={c}/>
           )
         })} 
-      </div>                         
+      </div>  
+      <Footer></Footer>                       
     </div>
   )
 }
