@@ -211,6 +211,7 @@ background-color: rgba(0, 0, 0, 0.65);
   margin-bottom: 3rem;
 }
 .footer{
+  margin-top: auto;
   margin-bottom: 1rem;
   width: 100%;
   display: flex;
